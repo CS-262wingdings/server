@@ -23,10 +23,10 @@
 
     <properties>
 
-        <INSTANCE_CONNECTION_NAME>LAB09-YOUR-INSTANCE-NAME-HERE</INSTANCE_CONNECTION_NAME>
-        <user>LAB09-YOUR-DB-USERNAME</user>
-        <password>LAB09-YOUR-DB-PASSWORD</password>
-        <database>LAB09-YOUR-DB-NAME</database>
+        <INSTANCE_CONNECTION_NAME>calvincs262-fall2018-wingdings-db</INSTANCE_CONNECTION_NAME>
+        <user>postgres</user>
+        <password>Ibb9ifFdtaiAA2h0</password>
+        <database>postgres</database>
 
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -36,7 +36,7 @@
         <endpoints.framework.version>2.0.14</endpoints.framework.version>
         <endpoints.management.version>1.0.4</endpoints.management.version>
 
-        <endpoints.project.id>LAB09-YOUR-ENDPOINT-ID</endpoints.project.id>
+        <endpoints.project.id>calvincs262-fall2018-WingDings</endpoints.project.id>
     </properties>
 
     <dependencies>
@@ -143,7 +143,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                     <fork>true</fork>
-                    <executable>LAB09-YOUR-JAVAC-PATH</executable>
+                    <executable>/usr/bin/javac</executable>
                 </configuration>
             </plugin>
         </plugins>
