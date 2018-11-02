@@ -36,7 +36,7 @@
         <endpoints.framework.version>2.0.14</endpoints.framework.version>
         <endpoints.management.version>1.0.4</endpoints.management.version>
 
-        <endpoints.project.id>calvincs262-fall2018-wingdings</endpoints.project.id>
+        <endpoints.project.id>phonic-biplane-221307</endpoints.project.id>
     </properties>
 
     <dependencies>
