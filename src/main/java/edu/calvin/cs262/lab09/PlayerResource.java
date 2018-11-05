@@ -24,18 +24,18 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
  * You should configure the name and namespace appropriately.
  */
 @Api(
-        name = "monopoly",
+     name = "monopoly", // change (name of app)
         version = "v1",
         namespace =
         @ApiNamespace(
-                ownerDomain = "lab09.cs262.calvin.edu",
-                ownerName = "lab09.cs262.calvin.edu",
+                      ownerDomain = "lab09.cs262.calvin.edu", // change
+                      ownerName = "lab09.cs262.calvin.edu", // change
                 packagePath = ""
         ),
         issuers = {
                 @ApiIssuer(
                         name = "firebase",
-                        issuer = "https://securetoken.google.com/YOUR-PROJECT-ID",
+                        issuer = "https://securetoken.google.com/phonic-biplane-221307",
                         jwksUri =
                                 "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system"
                                         + ".gserviceaccount.com"

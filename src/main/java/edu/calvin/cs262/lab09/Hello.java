@@ -19,7 +19,7 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.GET;
     issuers = {
         @ApiIssuer(
             name = "firebase",
-            issuer = "https://securetoken.google.com/YOUR-PROJECT-ID",
+            issuer = "https://securetoken.google.com/phonic-biplane-221307",
             jwksUri =
                 "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system"
                     + ".gserviceaccount.com"
