@@ -13,8 +13,6 @@ import java.util.List;
 
 import com.google.api.server.spi.config.*;
 
-
-
 /**
  * This Java annotation specifies the general configuration of the Google Cloud endpoint API.
  * The name and version are used in the URL: https://PROJECT_ID.appspot.com/monopoly/v1/ENDPOINT.
@@ -28,8 +26,8 @@ import com.google.api.server.spi.config.*;
         version = "v1",
         namespace =
         @ApiNamespace(
-                      ownerDomain = "lab09.cs262.calvin.edu", // change
-                      ownerName = "lab09.cs262.calvin.edu", // change
+                ownerDomain = "lab09.cs262.calvin.edu", // change
+                ownerName = "lab09.cs262.calvin.edu", // change
                 packagePath = ""
         ),
         issuers = {
@@ -44,64 +42,58 @@ import com.google.api.server.spi.config.*;
 )
 
 /**
- * This class implements a RESTful service for the player table of the monopoly database.
- * Only the player table is supported, not the game or playergame tables.
+ * This class implements a RESTful service for the question table of the monopoly database.
+ * Only the question table is supported, not the game or questiongame tables.
  *
  * You can test the GET endpoints using a standard browser or cURL.
  *
  * % curl --request GET \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/players
+ *    https://calvincs262-monopoly.appspot.com/monopoly/v1/questions
  *
  * % curl --request GET \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/player/1
+ *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question/1
  *
  * You can test the full REST API using the following sequence of cURL commands (on Linux):
- * (Run get-players between each command to see the results.)
+ * (Run get-questions between each command to see the results.)
  *
- * // Add a new player (probably as unique generated ID #4).
+ * // Add a new question (probably as unique generated ID #4).
  * % curl --request POST \
  *    --header "Content-Type: application/json" \
  *    --data '{"name":"test name...", "emailAddress":"test email..."}' \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/player
+ *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question
  *
- * // Edit the new player (assuming ID #4).
+ * // Edit the new question (assuming ID #4).
  * % curl --request PUT \
  *    --header "Content-Type: application/json" \
  *    --data '{"name":"new test name...", "emailAddress":"new test email..."}' \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/player/4
+ *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question/4
  *
- * // Delete the new player (assuming ID #4).
+ * // Delete the new question (assuming ID #4).
  * % curl --request DELETE \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/player/4
+ *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question/4
  *
  */
-public class QuestionResource {
+public class QuestionResources {
 
     /**
      * GET
-     * This method gets the full list of players from the Player table.
-     *
-     * @return JSON-formatted list of player records (based on a root JSON tag of "items")
+     * This method gets the full list of questions from the Question table.
+l     *
+     * @return JSON-formatted list of question records (based on a root JSON tag of "items")
      * @throws SQLException
      */
-    @ApiMethod(path="players", httpMethod=GET)
-    // public List<Player> getPlayers() throws SQLException {
-    public List<Question> getPlayers() throws SQLException {
+    @ApiMethod(path="questions", httpMethod=GET)
+    public List<Question> getQuestion() throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        // List<Player> result = new ArrayList<Player>();
         List<Question> result = new ArrayList<Question>();
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            resultSet = selectPlayers(statement);
+            resultSet = selectQuestion(statement);
             while (resultSet.next()) {
-                // Player p = new Player(
                 Question p = new Question(
-                        // Integer.parseInt(resultSet.getString(1)),
-                        // resultSet.getString(2),
-                        // resultSet.getString(3)
                         Integer.parseInt(resultSet.getString(1)),
                         resultSet.getString(2),
                         java.sql.Timestamp.valueOf(resultSet.getString(3)),
@@ -120,68 +112,33 @@ public class QuestionResource {
     }
 
     /**
-     * GET
-     * This method gets the player from the Player table with the given ID.
-     *
-     * @param id the ID of the requested player
-     * @return if the player exists, a JSON-formatted player record, otherwise an invalid/empty JSON entity
-     * @throws SQLException
-     */
-    // @ApiMethod(path="player/{id}", httpMethod=GET)
-    // public Player getPlayer(@Named("id") int id) throws SQLException {
-    //     Connection connection = null;
-    //     Statement statement = null;
-    //     ResultSet resultSet = null;
-    //     Player result = null;
-    //     try {
-    //         connection = DriverManager.getConnection(System.getProperty("cloudsql"));
-    //         statement = connection.createStatement();
-    //         resultSet = selectPlayer(id, statement);
-    //         if (resultSet.next()) {
-    //             result = new Player(
-    //                     Integer.parseInt(resultSet.getString(1)),
-    //                     resultSet.getString(2),
-    //                     resultSet.getString(3)
-    //             );
-    //         }
-    //     } catch (SQLException e) {
-    //         throw(e);
-    //     } finally {
-    //         if (resultSet != null) { resultSet.close(); }
-    //         if (statement != null) { statement.close(); }
-    //         if (connection != null) { connection.close(); }
-    //     }
-    //     return result;
-    // }
-
-    /**
      * PUT
      * This method creates/updates an instance of Person with a given ID.
-     * If the player doesn't exist, create a new player using the given field values.
-     * If the player already exists, update the fields using the new player field values.
+     * If the question doesn't exist, create a new question using the given field values.
+     * If the question already exists, update the fields using the new question field values.
      * We do this because PUT is idempotent, meaning that running the same PUT several
      * times is the same as running it exactly once.
-     * Any player ID value set in the passed player data is ignored.
+     * Any question ID value set in the passed question data is ignored.
      *
-     * @param id     the ID for the player, assumed to be unique
-     * @param player a JSON representation of the player; The id parameter overrides any id specified here.
-     * @return new/updated player entity
+     * @param id     the ID for the question, assumed to be unique
+     * @param question a JSON representation of the question; The id parameter overrides any id specified here.
+     * @return new/updated question entity
      * @throws SQLException
      */
-    // @ApiMethod(path="player/{id}", httpMethod=PUT)
-    // public Player putPlayer(Player player, @Named("id") int id) throws SQLException {
+    // @ApiMethod(path="question/{id}", httpMethod=PUT)
+    // public Question putQuestion(Question question, @Named("id") int id) throws SQLException {
     //     Connection connection = null;
     //     Statement statement = null;
     //     ResultSet resultSet = null;
     //     try {
     //         connection = DriverManager.getConnection(System.getProperty("cloudsql"));
     //         statement = connection.createStatement();
-    //         player.setId(id);
-    //         resultSet = selectPlayer(id, statement);
+    //         question.setId(id);
+    //         resultSet = selectQuestion(id, statement);
     //         if (resultSet.next()) {
-    //             updatePlayer(player, statement);
+    //             updateQuestion(question, statement);
     //         } else {
-    //             insertPlayer(player, statement);
+    //             insertQuestion(question, statement);
     //         }
     //     } catch (SQLException e) {
     //         throw (e);
@@ -190,7 +147,7 @@ public class QuestionResource {
     //         if (statement != null) { statement.close(); }
     //         if (connection != null) { connection.close(); }
     //     }
-    //     return player;
+    //     return question;
     // }
 
     /**
@@ -200,32 +157,28 @@ public class QuestionResource {
      * the same POST several times creates multiple objects with unique IDs but
      * otherwise having the same field values.
      *
-     * The method creates a new, unique ID by querying the player table for the
+     * The method creates a new, unique ID by querying the question table for the
      * largest ID and adding 1 to that. Using a DB sequence would be a better solution.
      * This method creates an instance of Person with a new, unique ID.
      *
-     * @param player a JSON representation of the player to be created
-     * @return new player entity with a system-generated ID
+     * @param question a JSON representation of the question to be created
+     * @return new question entity with a system-generated ID
      * @throws SQLException
      */
-    @ApiMethod(path="player", httpMethod=POST)
-    // public Player postPlayer(Player player) throws SQLException {
-    public Question postPlayer(Question question) throws SQLException {
+    @ApiMethod(path="question", httpMethod=POST)
+    public Question postQuestion(Question question) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            // resultSet = statement.executeQuery("SELECT MAX(ID) FROM Player");
             resultSet = statement.executeQuery("SELECT MAX(ID) FROM Question");
             if (resultSet.next()) {
-                // player.setId(resultSet.getInt(1) + 1);
                 question.setId(resultSet.getInt(1) + 1);
             } else {
                 throw new RuntimeException("failed to find unique ID...");
             }
-            // insertPlayer(player, statement);
             insertQuestion(question, statement);
         } catch (SQLException e) {
             throw (e);
@@ -234,28 +187,27 @@ public class QuestionResource {
             if (statement != null) { statement.close(); }
             if (connection != null) { connection.close(); }
         }
-        // return player;
         return question;
     }
 
     /**
      * DELETE
      * This method deletes the instance of Person with a given ID, if it exists.
-     * If the player with the given ID doesn't exist, SQL won't delete anything.
+     * If the question with the given ID doesn't exist, SQL won't delete anything.
      * This makes DELETE idempotent.
      *
-     * @param id     the ID for the player, assumed to be unique
-     * @return the deleted player, if any
+     * @param id     the ID for the question, assumed to be unique
+     * @return the deleted question, if any
      * @throws SQLException
      */
-    // @ApiMethod(path="player/{id}", httpMethod=DELETE)
-    // public void deletePlayer(@Named("id") int id) throws SQLException {
+    // @ApiMethod(path="question/{id}", httpMethod=DELETE)
+    // public void deleteQuestion(@Named("id") int id) throws SQLException {
     //     Connection connection = null;
     //     Statement statement = null;
     //     try {
     //         connection = DriverManager.getConnection(System.getProperty("cloudsql"));
     //         statement = connection.createStatement();
-    //         deletePlayer(id, statement);
+    //         deleteQuestion(id, statement);
     //     } catch (SQLException e) {
     //         throw (e);
     //     } finally {
@@ -266,51 +218,42 @@ public class QuestionResource {
 
     /** SQL Utility Functions *********************************************/
 
+
+
     /*
-     * This function gets the player with the given id using the given JDBC statement.
+     * This function gets the question with the given id using the given JDBC statement.
      */
-    // private ResultSet selectPlayer(int id, Statement statement) throws SQLException {
+    // private ResultSet selectQuestion(int id, Statement statement) throws SQLException {
     //     return statement.executeQuery(
-    //             String.format("SELECT * FROM Player WHERE id=%d", id)
+    //             String.format("SELECT * FROM Question WHERE id=%d", id)
     //     );
     // }
 
     /*
-     * This function gets the player with the given id using the given JDBC statement.
+     * This function gets the question with the given id using the given JDBC statement.
      */
-    private ResultSet selectPlayers(Statement statement) throws SQLException {
+    private ResultSet selectQuestion(Statement statement) throws SQLException {
         return statement.executeQuery(
-                // "SELECT * FROM Player"
                 "SELECT * FROM Question"
         );
     }
 
     /*
-     * This function modifies the given player using the given JDBC statement.
+     * This function modifies the given question using the given JDBC statement.
      */
-    private void updatePlayer(Player player, Statement statement) throws SQLException {
-        statement.executeUpdate(
-                String.format("UPDATE Player SET emailAddress='%s', name=%s WHERE id=%d",
-                        player.getEmailAddress(),
-                        getValueStringOrNull(player.getName()),
-                        player.getId()
-                )
-        );
-    }
-
-    /*
-     * This function inserts the given player using the given JDBC statement.
-     */
-    // private void insertPlayer(Player player, Statement statement) throws SQLException {
+    // private void updateQuestion(Question question, Statement statement) throws SQLException {
     //     statement.executeUpdate(
-    //             String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
-    //                     player.getId(),
-    //                     player.getEmailAddress(),
-    //                     getValueStringOrNull(player.getName())
+    //             String.format("UPDATE Question SET contents ='%s', downloads=%d WHERE id=%d",
+    //                     question.getContent(),
+    //                     question.getDownloads(),
+    //                     question.getId()
     //             )
     //     );
     // }
 
+    /*
+     * This function inserts the given question using the given JDBC statement.
+     */
     private void insertQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
                 String.format("INSERT INTO Question VALUES (%d, '%s', '%s', %d)",
@@ -323,11 +266,11 @@ public class QuestionResource {
     }
 
     /*
-     * This function gets the player with the given id using the given JDBC statement.
+     * This function gets the question with the given id using the given JDBC statement.
      */
-    // private void deletePlayer(int id, Statement statement) throws SQLException {
+    // private void deleteQuestion(int id, Statement statement) throws SQLException {
     //     statement.executeUpdate(
-    //             String.format("DELETE FROM Player WHERE id=%d", id)
+    //             String.format("DELETE FROM Question WHERE id=%d", id)
     //     );
     // }
 
