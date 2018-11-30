@@ -313,7 +313,7 @@ public class PlayerResource {
 
     private void insertQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
-                String.format("INSERT INTO Question VALUES (%d, '%s', %s, %d)",
+                String.format("INSERT INTO Question VALUES (%d, '%s', '%s', %d)",
                         question.getId(),
                         question.getContents(),
                         question.getTime().toString(),
