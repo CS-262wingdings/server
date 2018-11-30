@@ -1,5 +1,7 @@
 package edu.calvin.cs262.lab09;
 
+import java.sql.Timestamp;
+
 /**
  * This class implements a Question Data-Access Object (QAO) class for the Question relation.
  * This provides an object-oriented way to represent and manipulate question "objects" from
