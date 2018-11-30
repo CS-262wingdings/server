@@ -22,7 +22,7 @@ import com.google.api.server.spi.config.*;
  * You should configure the name and namespace appropriately.
  */
 @Api(
-     name = "question", // change (name of app)
+     name = "monopoly", // change (name of app)
         version = "v1",
         namespace =
         @ApiNamespace(
