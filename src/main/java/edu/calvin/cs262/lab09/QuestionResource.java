@@ -1,12 +1,5 @@
 package edu.calvin.cs262.lab09;
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
-import main.java.edu.calvin.cs262.lab09.Question;
-
 import static com.google.api.server.spi.config.ApiMethod.HttpMethod.GET;
 import static com.google.api.server.spi.config.ApiMethod.HttpMethod.POST;
 
@@ -20,7 +13,6 @@ import java.util.List;
 
 import com.google.api.server.spi.config.*;
 
-// import main.java.edu.calvin.cs262.lab09.Question;
 
 /**
  * This Java annotation specifies the general configuration of the Google Cloud endpoint API.
