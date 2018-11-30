@@ -8,6 +8,7 @@ package edu.calvin.cs262.lab09;
  */
 public class Question {
 
+    private java.sql.Timestamp time;
     private int id, downloads;
     private String contents;
 
@@ -15,10 +16,11 @@ public class Question {
     public Question() {
         // The JSON marshaller used by Endpoints requires this default constructor.
     }
-    public Question(int id, int downloads, String contents) {
+    public Question(int id, String contents, java.sql.Timestamp time, int downloads) {
         this.id = id;
         this.contents = contents;
-        this.name = name;
+        this.time = time;
+        this.downloads = downloads;
     }
 
     public int getId() {
@@ -36,9 +38,18 @@ public class Question {
         this.downloads = downloads;
     }
 
+    public int getTime() {
+        return this.time;
+    }
+
+    public void setTime(java.sql.Timestamp time) {
+       this.time = time;
+    }
+
     public String getContents() {
         return this.contents;
     }
+
     public void setContents(String content) {
         this.contents = contents;
     }

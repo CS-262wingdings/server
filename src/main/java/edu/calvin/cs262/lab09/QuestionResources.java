@@ -96,7 +96,8 @@ public class QuestionResource {
                 Question p = new Question(
                         Integer.parseInt(resultSet.getString(1)),
                         resultSet.getString(2),
-                        resultSet.getString(3)
+                        java.sql.Timestamp.valueOf(resultSet.getString(3)),
+                        Integer.parseInt(resultSet.getString(4))
                 );
                 result.add(p);
             }
@@ -255,10 +256,11 @@ public class QuestionResource {
      */
     private void insertQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
-                String.format("INSERT INTO Question VALUES (%d, '%s', %d)",
+                String.format("INSERT INTO Question VALUES (%d, '%s', '%s', %d)",
                         question.getId(),
                         question.getContents(),
-                        question.getDownloads(),
+                        time.getStartTime().toString(),
+                        question.getDownloads()
                 )
         );
     }
