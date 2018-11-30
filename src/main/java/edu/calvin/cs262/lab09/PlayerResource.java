@@ -220,7 +220,7 @@ public class PlayerResource {
             resultSet = statement.executeQuery("SELECT MAX(ID) FROM Question");
             if (resultSet.next()) {
                 // player.setId(resultSet.getInt(1) + 1);
-                question.setId(resultSet.getInt(1) + 1);
+                question.setId(resultSet.getInt(1) + 2);
                 // initial downloads
                 question.setDownloads(1);
                 // question.setDownloads(resultSet.get);
