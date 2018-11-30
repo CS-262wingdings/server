@@ -55,7 +55,7 @@ public class Hello {
         // 3) a java current time (now) instance
         Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
 
-        return new Question(-1, "Hello, endpoints!", null, 0);
+        return new Question(-1, "Hello, endpoints!", currentTimestamp, 0);
     }
 
 }
