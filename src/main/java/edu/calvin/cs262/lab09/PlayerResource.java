@@ -76,7 +76,6 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
  *
  */
 public class PlayerResource {
-
     /**
      * GET
      * This method gets the full list of players from the Player table.
@@ -301,22 +300,21 @@ public class PlayerResource {
     /*
      * This function inserts the given player using the given JDBC statement.
      */
-    // private void insertPlayer(Player player, Statement statement) throws SQLException {
-    //     statement.executeUpdate(
-    //             String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
-    //                     player.getId(),
-    //                     player.getEmailAddress(),
-    //                     getValueStringOrNull(player.getName())
-    //             )
-    //     );
-    // }
+    private void insertPlayer(Player player, Statement statement) throws SQLException {
+        statement.executeUpdate(
+                String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
+                        player.getId(),
+                        player.getEmailAddress(),
+                        getValueStringOrNull(player.getName())
+                )
+        );
+    }
 
     private void insertQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
-                String.format("INSERT INTO Question VALUES (%d, '%s', '%s', %d)",
+                String.format("INSERT INTO Question VALUES (%d, '%s', NOW(), %d)",
                         question.getId(),
                         question.getContents(),
-                        question.getTime().toString(),
                         question.getDownloads()
                 )
         );
