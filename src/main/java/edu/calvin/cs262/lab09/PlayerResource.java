@@ -24,7 +24,7 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
  * You should configure the name and namespace appropriately.
  */
 @Api(
-     name = "question", // change (name of app)
+     name = "game", // change (name of app)
         version = "v1",
         namespace =
         @ApiNamespace(
@@ -84,7 +84,7 @@ public class PlayerResource {
      * @return JSON-formatted list of player records (based on a root JSON tag of "items")
      * @throws SQLException
      */
-    @ApiMethod(path="players", httpMethod=GET)
+    @ApiMethod(path="questions", httpMethod=GET)
     // public List<Player> getPlayers() throws SQLException {
     public List<Question> getPlayers() throws SQLException {
         Connection connection = null;
@@ -208,7 +208,7 @@ public class PlayerResource {
      * @return new player entity with a system-generated ID
      * @throws SQLException
      */
-    @ApiMethod(path="player", httpMethod=POST)
+    @ApiMethod(path="question", httpMethod=POST)
     // public Player postPlayer(Player player) throws SQLException {
     public Question postPlayer(Question question) throws SQLException {
         Connection connection = null;
