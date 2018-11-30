@@ -13,9 +13,9 @@ CREATE TABLE Question (
 GRANT SELECT ON Question TO PUBLIC;
 
 INSERT INTO Question VALUES (
-        DEFAULT,
-        'On an average day, how many pigeons do you think you could reasonably carry?',
+        1,
+        'Sample question',
         NOW(),
-        298);
+        0);
 
 SELECT * FROM Question;
