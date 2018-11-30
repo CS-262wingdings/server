@@ -84,7 +84,7 @@ public class QuestionResource {
      * @return JSON-formatted list of player records (based on a root JSON tag of "items")
      * @throws SQLException
      */
-    @ApiMethod(path="players", httpMethod=GET)
+    @ApiMethod(path="questions", httpMethod=GET)
     // public List<Player> getPlayers() throws SQLException {
     public List<Question> getPlayers() throws SQLException {
         Connection connection = null;
@@ -208,7 +208,7 @@ public class QuestionResource {
      * @return new player entity with a system-generated ID
      * @throws SQLException
      */
-    @ApiMethod(path="player", httpMethod=POST)
+    @ApiMethod(path="question", httpMethod=POST)
     // public Player postPlayer(Player player) throws SQLException {
     public Question postPlayer(Question question) throws SQLException {
         Connection connection = null;
