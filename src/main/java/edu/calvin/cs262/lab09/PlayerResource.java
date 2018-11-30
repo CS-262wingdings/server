@@ -221,6 +221,10 @@ public class PlayerResource {
             if (resultSet.next()) {
                 // player.setId(resultSet.getInt(1) + 1);
                 question.setId(resultSet.getInt(1) + 1);
+                // initial downloads
+                question.setDownloads(1);
+                // question.setDownloads(resultSet.get);
+                // question.setContents(resultSet);
             } else {
                 throw new RuntimeException("failed to find unique ID...");
             }
