@@ -36,7 +36,7 @@ public class Question {
         return this.downloads;
     }
 
-    public void setDownloads(int id) {
+    public void setDownloads(int downloads) {
         this.downloads = downloads;
     }
 
@@ -52,7 +52,7 @@ public class Question {
         return this.contents;
     }
 
-    public void setContents(String content) {
+    public void setContents(String contents) {
         this.contents = contents;
     }
 }
