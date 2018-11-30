@@ -1,29 +1,34 @@
 #!/usr/bin/env bash
 
+
+# https://phonic-biplane-221307.appspot.com/question/v1/players
+
 echo --------------------------------------------
-curl -o - https://hello-endpoints-207818.appspot.com/monopoly/v1/player/1
+curl -o - https://phonic-biplane-221307.appspot.com/question/v1/player/1
 echo --------------------------------------------
-curl -o - https://hello-endpoints-207818.appspot.com/monopoly/v1/player/10
+curl -o - https://phonic-biplane-221307.appspot.com/question/v1/player/10
 
 echo --------------------------------------------
 curl \
     --header "Content-Type: application/json" \
     --request PUT \
     --data '{"emailAddress":"test1@test.edu"}' \
-    https://hello-endpoints-207818.appspot.com/monopoly/v1/player/7
+    https://phonic-biplane-221307.appspot.com/question/v1/player/7
 
 echo --------------------------------------------
 curl \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{"id":"100", "emailAddress":"test2@test.edu", "name":"meetoo"}' \
-    https://hello-endpoints-207818.appspot.com/monopoly/v1/player
+    --data '{"id":"100", "contents":"meetoo", "time":"2018-11-30T02:02:12.635Z", "downloads":"100"}' \
+    https://phonic-biplane-221307.appspot.com/question/v1/player
 
+
+    # --data '{"id":"100", "emailAddress":"test2@test.edu", "name":"meetoo"}' \
 echo --------------------------------------------
 curl \
     --request DELETE \
-    https://hello-endpoints-207818.appspot.com/monopoly/v1/player/7
+    https://phonic-biplane-221307.appspot.com/question/v1/player/7
 echo --------------------------------------------
 curl \
     --request DELETE \
-    https://hello-endpoints-207818.appspot.com/monopoly/v1/player/8
+    https://phonic-biplane-221307.appspot.com/question/v1/player/8
