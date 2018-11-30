@@ -1,6 +1,7 @@
 package edu.calvin.cs262.lab09;
 
-import com.google.api.server.spi.config.*;
+import static com.google.api.server.spi.config.ApiMethod.HttpMethod.GET;
+import static com.google.api.server.spi.config.ApiMethod.HttpMethod.POST;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,10 +11,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.api.server.spi.config.ApiMethod.HttpMethod.GET;
-import static com.google.api.server.spi.config.ApiMethod.HttpMethod.PUT;
-import static com.google.api.server.spi.config.ApiMethod.HttpMethod.POST;
-import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
+import com.google.api.server.spi.config.*;
+
+import main.java.edu.calvin.cs262.lab09.Question;
 
 /**
  * This Java annotation specifies the general configuration of the Google Cloud endpoint API.
@@ -75,7 +75,7 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
  *    https://calvincs262-monopoly.appspot.com/monopoly/v1/player/4
  *
  */
-public class PlayerResource {
+public class QuestionResource {
 
     /**
      * GET
