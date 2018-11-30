@@ -41,8 +41,18 @@ public class Hello {
      * @return a hello-world entity in JSON format
      */
     @ApiMethod(httpMethod=GET)
-    public Player hello() {
-        return new Player(-1, "Hello, endpoints!", null);
+    public Question hello() {
+        // 1) create a java calendar instance
+        Calendar calendar = Calendar.getInstance();
+
+        // 2) get a java.util.Date from the calendar instance.
+        //    this date will represent the current instant, or "now".
+        java.util.Date now = calendar.getTime();
+
+        // 3) a java current time (now) instance
+        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+
+        return new Question(-1, "Hello, endpoints!", currentTimestamp, 0);
     }
 
 }

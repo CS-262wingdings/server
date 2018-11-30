@@ -22,12 +22,12 @@ import com.google.api.server.spi.config.*;
  * You should configure the name and namespace appropriately.
  */
 @Api(
-     name = "monopoly", // change (name of app)
+     name = "question", // change (name of app)
         version = "v1",
         namespace =
         @ApiNamespace(
-                      ownerDomain = "lab09.cs262.calvin.edu", // change
-                      ownerName = "lab09.cs262.calvin.edu", // change
+                ownerDomain = "lab09.cs262.calvin.edu", // change
+                ownerName = "lab09.cs262.calvin.edu", // change
                 packagePath = ""
         ),
         issuers = {
