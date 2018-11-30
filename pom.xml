@@ -20,7 +20,7 @@
 <!-- project name -->
     <groupId>edu.calvin.cs262.lab09</groupId> 
     <!-- <artifactId>monopoly</artifactId> -->
-    <artifactId>questions</artifactId>
+    <artifactId>question</artifactId>
 
     <properties>
 
