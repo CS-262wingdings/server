@@ -171,8 +171,10 @@ public class PlayerResource {
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            // question.setId(id);
+
             question.setId(id);
+            question.setDownloads(resultSet.getInt(4) + 1);
+
             resultSet = selectQuestion(id, statement);
             if (resultSet.next()) {
                 updateQuestion(question, statement);
@@ -284,7 +286,7 @@ public class PlayerResource {
     private void updateQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
                 String.format("UPDATE Question SET downloads=%d WHERE id=%d",
-                        question.getDownloads() + 1,
+                        question.getDownloads(),
                         question.getId()
                 )
         );

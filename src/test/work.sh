@@ -19,8 +19,9 @@ echo --------------------------------------------
 curl \
     --header "Content-Type: application/json" \
     --request POST \
-    --data '{"id":"100", "contents":"meetoo", "time":"2018-11-30T02:02:12.635Z", "downloads":"100"}' \
-    https://phonic-biplane-221307.appspot.com/question/v1/player
+    --data '{"contents":"This is another question"}' \
+    https://phonic-biplane-221307.appspot.com/game/v1/question
+
 
 
     # --data '{"id":"100", "emailAddress":"test2@test.edu", "name":"meetoo"}' \
