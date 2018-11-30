@@ -38,7 +38,7 @@ public class Question {
         this.downloads = downloads;
     }
 
-    public int getTime() {
+    public java.sql.Timestamp getTime() {
         return this.time;
     }
 
