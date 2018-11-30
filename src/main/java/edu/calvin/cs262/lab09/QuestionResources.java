@@ -73,7 +73,7 @@ import com.google.api.server.spi.config.*;
  *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question/4
  *
  */
-public class QuestionResource {
+public class QuestionResources {
 
     /**
      * GET
@@ -259,7 +259,7 @@ public class QuestionResource {
                 String.format("INSERT INTO Question VALUES (%d, '%s', '%s', %d)",
                         question.getId(),
                         question.getContents(),
-                        time.getStartTime().toString(),
+                        question.getTime().toString(),
                         question.getDownloads()
                 )
         );
