@@ -173,14 +173,13 @@ public class PlayerResource {
             statement = connection.createStatement();
             resultSet = selectQuestion(id, statement);
 
-            question.setId(id);
-            question.setDownloads(resultSet.getInt(4) + 1);
-
             if (resultSet.next()) {
+                question.setDownloads(resultSet.getInt(4) + 1);
                 updateQuestion(question, statement);
             } else {
                 insertQuestion(question, statement);
             }
+
         } catch (SQLException e) {
             throw (e);
         } finally {
