@@ -19,7 +19,8 @@
     <version>1.0-SNAPSHOT</version>
 <!-- project name -->
     <groupId>edu.calvin.cs262.lab09</groupId> 
-    <artifactId>monopoly</artifactId>
+    <!-- <artifactId>monopoly</artifactId> -->
+    <artifactId>questions</artifactId>
 
     <properties>
 
