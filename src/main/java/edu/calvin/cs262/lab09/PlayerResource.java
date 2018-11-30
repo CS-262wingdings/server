@@ -234,7 +234,8 @@ public class PlayerResource {
             if (statement != null) { statement.close(); }
             if (connection != null) { connection.close(); }
         }
-        return player;
+        // return player;
+        return question;
     }
 
     /**
