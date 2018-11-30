@@ -78,11 +78,11 @@ public class QuestionResources {
     /**
      * GET
      * This method gets the full list of questions from the Question table.
-     *
+l     *
      * @return JSON-formatted list of question records (based on a root JSON tag of "items")
      * @throws SQLException
      */
-    @ApiMethod(path="question", httpMethod=GET)
+    @ApiMethod(path="questions", httpMethod=GET)
     public List<Question> getQuestion() throws SQLException {
         Connection connection = null;
         Statement statement = null;

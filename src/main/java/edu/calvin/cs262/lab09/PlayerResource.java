@@ -209,20 +209,24 @@ public class PlayerResource {
      * @throws SQLException
      */
     @ApiMethod(path="player", httpMethod=POST)
-    public Player postPlayer(Player player) throws SQLException {
+    // public Player postPlayer(Player player) throws SQLException {
+    public Question postPlayer(Question question) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT MAX(ID) FROM Player");
+            // resultSet = statement.executeQuery("SELECT MAX(ID) FROM Player");
+            resultSet = statement.executeQuery("SELECT MAX(ID) FROM Question");
             if (resultSet.next()) {
-                player.setId(resultSet.getInt(1) + 1);
+                // player.setId(resultSet.getInt(1) + 1);
+                question.setId(resultSet.getInt(1) + 1);
             } else {
                 throw new RuntimeException("failed to find unique ID...");
             }
-            insertPlayer(player, statement);
+            // insertPlayer(player, statement);
+            insertPlayer(question, statement);
         } catch (SQLException e) {
             throw (e);
         } finally {
@@ -296,12 +300,18 @@ public class PlayerResource {
     /*
      * This function inserts the given player using the given JDBC statement.
      */
-    private void insertPlayer(Player player, Statement statement) throws SQLException {
+    // private void insertPlayer(Player player, Statement statement) throws SQLException {
+    private void insertPlayer(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
-                String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
-                        player.getId(),
-                        player.getEmailAddress(),
-                        getValueStringOrNull(player.getName())
+                // String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
+                String.format("INSERT INTO Question VALUES (%d, '%s', %s)",
+                        // player.getId(),
+                        // player.getEmailAddress(),
+                        // getValueStringOrNull(player.getName())
+                        question.getId(),
+                        question.getContents(),
+                        question.getTime().toString(),
+                        question.getDownloads()
                 )
         );
     }
