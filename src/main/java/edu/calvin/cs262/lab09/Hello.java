@@ -4,6 +4,9 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiIssuer;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import java.util.Calendar;
+import java.util.Date;
+import java.sql.Timestamp;
 
 import static com.google.api.server.spi.config.ApiMethod.HttpMethod.GET;
 
@@ -47,12 +50,12 @@ public class Hello {
 
         // 2) get a java.util.Date from the calendar instance.
         //    this date will represent the current instant, or "now".
-        java.util.Date now = calendar.getTime();
+        Date now = calendar.getTime();
 
         // 3) a java current time (now) instance
-        java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
+        Timestamp currentTimestamp = new java.sql.Timestamp(now.getTime());
 
-        return new Question(-1, "Hello, endpoints!", currentTimestamp, 0);
+        return new Question(-1, "Hello, endpoints!", null, 0);
     }
 
 }
