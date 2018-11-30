@@ -226,7 +226,7 @@ public class PlayerResource {
                 throw new RuntimeException("failed to find unique ID...");
             }
             // insertPlayer(player, statement);
-            insertPlayer(question, statement);
+            insertQuestion(question, statement);
         } catch (SQLException e) {
             throw (e);
         } finally {
@@ -300,14 +300,19 @@ public class PlayerResource {
     /*
      * This function inserts the given player using the given JDBC statement.
      */
-    // private void insertPlayer(Player player, Statement statement) throws SQLException {
-    private void insertPlayer(Question question, Statement statement) throws SQLException {
+    private void insertPlayer(Player player, Statement statement) throws SQLException {
         statement.executeUpdate(
-                // String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
+                String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
+                        player.getId(),
+                        player.getEmailAddress(),
+                        getValueStringOrNull(player.getName())
+                )
+        );
+    }
+
+    private void insertQuestion(Question question, Statement statement) throws SQLException {
+        statement.executeUpdate(
                 String.format("INSERT INTO Question VALUES (%d, '%s', %s)",
-                        // player.getId(),
-                        // player.getEmailAddress(),
-                        // getValueStringOrNull(player.getName())
                         question.getId(),
                         question.getContents(),
                         question.getTime().toString(),
