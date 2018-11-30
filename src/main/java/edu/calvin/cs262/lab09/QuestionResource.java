@@ -13,6 +13,7 @@ import java.util.List;
 
 import com.google.api.server.spi.config.*;
 
+import main.java.edu.calvin.cs262.lab09.Question;
 
 /**
  * This Java annotation specifies the general configuration of the Google Cloud endpoint API.
@@ -83,7 +84,7 @@ public class QuestionResource {
      * @return JSON-formatted list of player records (based on a root JSON tag of "items")
      * @throws SQLException
      */
-    @ApiMethod(path="questions", httpMethod=GET)
+    @ApiMethod(path="players", httpMethod=GET)
     // public List<Player> getPlayers() throws SQLException {
     public List<Question> getPlayers() throws SQLException {
         Connection connection = null;
@@ -207,7 +208,7 @@ public class QuestionResource {
      * @return new player entity with a system-generated ID
      * @throws SQLException
      */
-    @ApiMethod(path="question", httpMethod=POST)
+    @ApiMethod(path="player", httpMethod=POST)
     // public Player postPlayer(Player player) throws SQLException {
     public Question postPlayer(Question question) throws SQLException {
         Connection connection = null;
