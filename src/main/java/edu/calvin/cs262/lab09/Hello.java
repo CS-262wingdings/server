@@ -8,7 +8,7 @@ import com.google.api.server.spi.config.ApiNamespace;
 import static com.google.api.server.spi.config.ApiMethod.HttpMethod.GET;
 
 @Api(
-    name = "monopoly",
+    name = "question",
     version = "v1",
     namespace =
     @ApiNamespace(
