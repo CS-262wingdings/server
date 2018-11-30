@@ -171,11 +171,11 @@ public class PlayerResource {
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
+            resultSet = selectQuestion(id, statement);
 
             question.setId(id);
             question.setDownloads(resultSet.getInt(4) + 1);
 
-            resultSet = selectQuestion(id, statement);
             if (resultSet.next()) {
                 updateQuestion(question, statement);
             } else {
