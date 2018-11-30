@@ -84,23 +84,17 @@ public class PlayerResource {
      * @throws SQLException
      */
     @ApiMethod(path="questions", httpMethod=GET)
-    // public List<Player> getPlayers() throws SQLException {
-    public List<Question> getPlayers() throws SQLException {
+    public List<Question> getQuestions() throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        // List<Player> result = new ArrayList<Player>();
         List<Question> result = new ArrayList<Question>();
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            resultSet = selectPlayers(statement);
+            resultSet = selectQuestions(statement);
             while (resultSet.next()) {
-                // Player p = new Player(
                 Question p = new Question(
-                        // Integer.parseInt(resultSet.getString(1)),
-                        // resultSet.getString(2),
-                        // resultSet.getString(3)
                         Integer.parseInt(resultSet.getString(1)),
                         resultSet.getString(2),
                         java.sql.Timestamp.valueOf(resultSet.getString(3)),
@@ -168,29 +162,31 @@ public class PlayerResource {
      * @throws SQLException
      */
     // @ApiMethod(path="player/{id}", httpMethod=PUT)
-    // public Player putPlayer(Player player, @Named("id") int id) throws SQLException {
-    //     Connection connection = null;
-    //     Statement statement = null;
-    //     ResultSet resultSet = null;
-    //     try {
-    //         connection = DriverManager.getConnection(System.getProperty("cloudsql"));
-    //         statement = connection.createStatement();
-    //         player.setId(id);
-    //         resultSet = selectPlayer(id, statement);
-    //         if (resultSet.next()) {
-    //             updatePlayer(player, statement);
-    //         } else {
-    //             insertPlayer(player, statement);
-    //         }
-    //     } catch (SQLException e) {
-    //         throw (e);
-    //     } finally {
-    //         if (resultSet != null) { resultSet.close(); }
-    //         if (statement != null) { statement.close(); }
-    //         if (connection != null) { connection.close(); }
-    //     }
-    //     return player;
-    // }
+    @ApiMethod(path="question/{id}", httpMethod=PUT)
+    public Question putQuestion(Question question, @Named("id") int id) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DriverManager.getConnection(System.getProperty("cloudsql"));
+            statement = connection.createStatement();
+            // player.setId(id);
+            question.setId(id);
+            resultSet = selectQuestion(id, statement);
+            if (resultSet.next()) {
+                updateQuestion(question, statement);
+            } else {
+                insertQuestion(question, statement);
+            }
+        } catch (SQLException e) {
+            throw (e);
+        } finally {
+            if (resultSet != null) { resultSet.close(); }
+            if (statement != null) { statement.close(); }
+            if (connection != null) { connection.close(); }
+        }
+        return question;
+    }
 
     /**
      * POST
@@ -208,27 +204,20 @@ public class PlayerResource {
      * @throws SQLException
      */
     @ApiMethod(path="question", httpMethod=POST)
-    // public Player postPlayer(Player player) throws SQLException {
-    public Question postPlayer(Question question) throws SQLException {
+    public Question postQuestion(Question question) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            // resultSet = statement.executeQuery("SELECT MAX(ID) FROM Player");
             resultSet = statement.executeQuery("SELECT MAX(ID) FROM Question");
             if (resultSet.next()) {
-                // player.setId(resultSet.getInt(1) + 1);
                 question.setId(resultSet.getInt(1) + 1);
-                // initial downloads
                 question.setDownloads(0);
-                // question.setDownloads(resultSet.get);
-                // question.setContents(resultSet);
             } else {
                 throw new RuntimeException("failed to find unique ID...");
             }
-            // insertPlayer(player, statement);
             insertQuestion(question, statement);
         } catch (SQLException e) {
             throw (e);
@@ -272,16 +261,16 @@ public class PlayerResource {
     /*
      * This function gets the player with the given id using the given JDBC statement.
      */
-    // private ResultSet selectPlayer(int id, Statement statement) throws SQLException {
-    //     return statement.executeQuery(
-    //             String.format("SELECT * FROM Player WHERE id=%d", id)
-    //     );
-    // }
+    private ResultSet selectQuestion(int id, Statement statement) throws SQLException {
+        return statement.executeQuery(
+                String.format("SELECT * FROM Player WHERE id=%d", id)
+        );
+    }
 
     /*
      * This function gets the player with the given id using the given JDBC statement.
      */
-    private ResultSet selectPlayers(Statement statement) throws SQLException {
+    private ResultSet selectQuestions(Statement statement) throws SQLException {
         return statement.executeQuery(
                 // "SELECT * FROM Player"
                 "SELECT * FROM Question"
@@ -291,25 +280,11 @@ public class PlayerResource {
     /*
      * This function modifies the given player using the given JDBC statement.
      */
-    private void updatePlayer(Player player, Statement statement) throws SQLException {
+    private void updateQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
-                String.format("UPDATE Player SET emailAddress='%s', name=%s WHERE id=%d",
-                        player.getEmailAddress(),
-                        getValueStringOrNull(player.getName()),
-                        player.getId()
-                )
-        );
-    }
-
-    /*
-     * This function inserts the given player using the given JDBC statement.
-     */
-    private void insertPlayer(Player player, Statement statement) throws SQLException {
-        statement.executeUpdate(
-                String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
-                        player.getId(),
-                        player.getEmailAddress(),
-                        getValueStringOrNull(player.getName())
+                String.format("UPDATE Question SET downloads=%d WHERE id=%d",
+                        question.getDownloads() + 1,
+                        question.getId()
                 )
         );
     }
