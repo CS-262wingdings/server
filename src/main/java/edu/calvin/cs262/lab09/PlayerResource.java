@@ -127,32 +127,32 @@ public class PlayerResource {
      * @return if the player exists, a JSON-formatted player record, otherwise an invalid/empty JSON entity
      * @throws SQLException
      */
-    @ApiMethod(path="player/{id}", httpMethod=GET)
-    public Player getPlayer(@Named("id") int id) throws SQLException {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        Player result = null;
-        try {
-            connection = DriverManager.getConnection(System.getProperty("cloudsql"));
-            statement = connection.createStatement();
-            resultSet = selectPlayer(id, statement);
-            if (resultSet.next()) {
-                result = new Player(
-                        Integer.parseInt(resultSet.getString(1)),
-                        resultSet.getString(2),
-                        resultSet.getString(3)
-                );
-            }
-        } catch (SQLException e) {
-            throw(e);
-        } finally {
-            if (resultSet != null) { resultSet.close(); }
-            if (statement != null) { statement.close(); }
-            if (connection != null) { connection.close(); }
-        }
-        return result;
-    }
+    // @ApiMethod(path="player/{id}", httpMethod=GET)
+    // public Player getPlayer(@Named("id") int id) throws SQLException {
+    //     Connection connection = null;
+    //     Statement statement = null;
+    //     ResultSet resultSet = null;
+    //     Player result = null;
+    //     try {
+    //         connection = DriverManager.getConnection(System.getProperty("cloudsql"));
+    //         statement = connection.createStatement();
+    //         resultSet = selectPlayer(id, statement);
+    //         if (resultSet.next()) {
+    //             result = new Player(
+    //                     Integer.parseInt(resultSet.getString(1)),
+    //                     resultSet.getString(2),
+    //                     resultSet.getString(3)
+    //             );
+    //         }
+    //     } catch (SQLException e) {
+    //         throw(e);
+    //     } finally {
+    //         if (resultSet != null) { resultSet.close(); }
+    //         if (statement != null) { statement.close(); }
+    //         if (connection != null) { connection.close(); }
+    //     }
+    //     return result;
+    // }
 
     /**
      * PUT
@@ -168,30 +168,30 @@ public class PlayerResource {
      * @return new/updated player entity
      * @throws SQLException
      */
-    @ApiMethod(path="player/{id}", httpMethod=PUT)
-    public Player putPlayer(Player player, @Named("id") int id) throws SQLException {
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            connection = DriverManager.getConnection(System.getProperty("cloudsql"));
-            statement = connection.createStatement();
-            player.setId(id);
-            resultSet = selectPlayer(id, statement);
-            if (resultSet.next()) {
-                updatePlayer(player, statement);
-            } else {
-                insertPlayer(player, statement);
-            }
-        } catch (SQLException e) {
-            throw (e);
-        } finally {
-            if (resultSet != null) { resultSet.close(); }
-            if (statement != null) { statement.close(); }
-            if (connection != null) { connection.close(); }
-        }
-        return player;
-    }
+    // @ApiMethod(path="player/{id}", httpMethod=PUT)
+    // public Player putPlayer(Player player, @Named("id") int id) throws SQLException {
+    //     Connection connection = null;
+    //     Statement statement = null;
+    //     ResultSet resultSet = null;
+    //     try {
+    //         connection = DriverManager.getConnection(System.getProperty("cloudsql"));
+    //         statement = connection.createStatement();
+    //         player.setId(id);
+    //         resultSet = selectPlayer(id, statement);
+    //         if (resultSet.next()) {
+    //             updatePlayer(player, statement);
+    //         } else {
+    //             insertPlayer(player, statement);
+    //         }
+    //     } catch (SQLException e) {
+    //         throw (e);
+    //     } finally {
+    //         if (resultSet != null) { resultSet.close(); }
+    //         if (statement != null) { statement.close(); }
+    //         if (connection != null) { connection.close(); }
+    //     }
+    //     return player;
+    // }
 
     /**
      * POST
@@ -248,32 +248,32 @@ public class PlayerResource {
      * @return the deleted player, if any
      * @throws SQLException
      */
-    @ApiMethod(path="player/{id}", httpMethod=DELETE)
-    public void deletePlayer(@Named("id") int id) throws SQLException {
-        Connection connection = null;
-        Statement statement = null;
-        try {
-            connection = DriverManager.getConnection(System.getProperty("cloudsql"));
-            statement = connection.createStatement();
-            deletePlayer(id, statement);
-        } catch (SQLException e) {
-            throw (e);
-        } finally {
-            if (statement != null) { statement.close(); }
-            if (connection != null) { connection.close(); }
-        }
-    }
+    // @ApiMethod(path="player/{id}", httpMethod=DELETE)
+    // public void deletePlayer(@Named("id") int id) throws SQLException {
+    //     Connection connection = null;
+    //     Statement statement = null;
+    //     try {
+    //         connection = DriverManager.getConnection(System.getProperty("cloudsql"));
+    //         statement = connection.createStatement();
+    //         deletePlayer(id, statement);
+    //     } catch (SQLException e) {
+    //         throw (e);
+    //     } finally {
+    //         if (statement != null) { statement.close(); }
+    //         if (connection != null) { connection.close(); }
+    //     }
+    // }
 
     /** SQL Utility Functions *********************************************/
 
     /*
      * This function gets the player with the given id using the given JDBC statement.
      */
-    private ResultSet selectPlayer(int id, Statement statement) throws SQLException {
-        return statement.executeQuery(
-                String.format("SELECT * FROM Player WHERE id=%d", id)
-        );
-    }
+    // private ResultSet selectPlayer(int id, Statement statement) throws SQLException {
+    //     return statement.executeQuery(
+    //             String.format("SELECT * FROM Player WHERE id=%d", id)
+    //     );
+    // }
 
     /*
      * This function gets the player with the given id using the given JDBC statement.
@@ -301,15 +301,15 @@ public class PlayerResource {
     /*
      * This function inserts the given player using the given JDBC statement.
      */
-    private void insertPlayer(Player player, Statement statement) throws SQLException {
-        statement.executeUpdate(
-                String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
-                        player.getId(),
-                        player.getEmailAddress(),
-                        getValueStringOrNull(player.getName())
-                )
-        );
-    }
+    // private void insertPlayer(Player player, Statement statement) throws SQLException {
+    //     statement.executeUpdate(
+    //             String.format("INSERT INTO Player VALUES (%d, '%s', %s)",
+    //                     player.getId(),
+    //                     player.getEmailAddress(),
+    //                     getValueStringOrNull(player.getName())
+    //             )
+    //     );
+    // }
 
     private void insertQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
@@ -325,11 +325,11 @@ public class PlayerResource {
     /*
      * This function gets the player with the given id using the given JDBC statement.
      */
-    private void deletePlayer(int id, Statement statement) throws SQLException {
-        statement.executeUpdate(
-                String.format("DELETE FROM Player WHERE id=%d", id)
-        );
-    }
+    // private void deletePlayer(int id, Statement statement) throws SQLException {
+    //     statement.executeUpdate(
+    //             String.format("DELETE FROM Player WHERE id=%d", id)
+    //     );
+    // }
 
     /*
      * This function returns a value literal suitable for an SQL INSERT/UPDATE command.
