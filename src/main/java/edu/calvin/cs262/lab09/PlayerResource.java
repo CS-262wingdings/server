@@ -85,20 +85,27 @@ public class PlayerResource {
      * @throws SQLException
      */
     @ApiMethod(path="players", httpMethod=GET)
-    public List<Player> getPlayers() throws SQLException {
+    // public List<Player> getPlayers() throws SQLException {
+    public List<Question> getPlayers() throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        List<Player> result = new ArrayList<Player>();
+        // List<Player> result = new ArrayList<Player>();
+        List<Question> result = new ArrayList<Question>();
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
             resultSet = selectPlayers(statement);
             while (resultSet.next()) {
-                Player p = new Player(
+                // Player p = new Player(
+                Question p = new Question(
+                        // Integer.parseInt(resultSet.getString(1)),
+                        // resultSet.getString(2),
+                        // resultSet.getString(3)
                         Integer.parseInt(resultSet.getString(1)),
                         resultSet.getString(2),
-                        resultSet.getString(3)
+                        java.sql.Timestamp.valueOf(resultSet.getString(3)),
+                        Integer.parseInt(resultSet.getString(4))
                 );
                 result.add(p);
             }
@@ -268,7 +275,8 @@ public class PlayerResource {
      */
     private ResultSet selectPlayers(Statement statement) throws SQLException {
         return statement.executeQuery(
-                "SELECT * FROM Player"
+                // "SELECT * FROM Player"
+                "SELECT * FROM Question"
         );
     }
 
