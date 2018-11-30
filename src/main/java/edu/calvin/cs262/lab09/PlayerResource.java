@@ -120,8 +120,8 @@ public class PlayerResource {
      * @return if the question exists, a JSON-formatted question record, otherwise an invalid/empty JSON entity
      * @throws SQLException
      */
-    @ApiMethod(path="question/{contents}", httpMethod=GET)
-    public Question getQuestion(@Named("contents") String contents) throws SQLException {
+    @ApiMethod(path="question/{id}", httpMethod=GET)
+    public Question getQuestion(@Named("id") int id) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -129,7 +129,7 @@ public class PlayerResource {
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            resultSet = selectQuestion(contents, statement);
+            resultSet = selectQuestion(id, statement);
             if (resultSet.next()) {
                 result = new Question(
                         Integer.parseInt(resultSet.getString(1)),
@@ -163,15 +163,15 @@ public class PlayerResource {
      * @throws SQLException
      */
     // @ApiMethod(path="question/{id}", httpMethod=PUT)
-    @ApiMethod(path="question/{contents}", httpMethod=PUT)
-    public Question putQuestion(Question question, @Named("contents") String contents) throws SQLException {
+    @ApiMethod(path="question/{id}", httpMethod=PUT)
+    public Question putQuestion(Question question, @Named("id") int id) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            resultSet = selectQuestion(contents, statement);
+            resultSet = selectQuestion(id, statement);
 
             if (resultSet.next()) {
                 question.setDownloads(resultSet.getInt(4) + 1);
@@ -179,7 +179,6 @@ public class PlayerResource {
             } else {
                 insertQuestion(question, statement);
             }
-
         } catch (SQLException e) {
             throw (e);
         } finally {
@@ -242,14 +241,14 @@ public class PlayerResource {
      * @return the deleted question, if any
      * @throws SQLException
      */
-    @ApiMethod(path="question/{contents}", httpMethod=DELETE)
-    public void deleteQuestion(@Named("contents") String contents) throws SQLException {
+    @ApiMethod(path="question/{id}", httpMethod=DELETE)
+    public void deleteQuestion(@Named("id") int id) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         try {
             connection = DriverManager.getConnection(System.getProperty("cloudsql"));
             statement = connection.createStatement();
-            deleteQuestion(contents, statement);
+            deleteQuestion(id, statement);
         } catch (SQLException e) {
             throw (e);
         } finally {
@@ -263,9 +262,9 @@ public class PlayerResource {
     /*
      * This function gets the question with the given id using the given JDBC statement.
      */
-    private ResultSet selectQuestion(String contents, Statement statement) throws SQLException {
+    private ResultSet selectQuestion(int id, Statement statement) throws SQLException {
         return statement.executeQuery(
-                String.format("SELECT * FROM Question WHERE contents='%s'", contents)
+                String.format("SELECT * FROM Question WHERE id=%d", id)
         );
     }
 
@@ -284,9 +283,9 @@ public class PlayerResource {
      */
     private void updateQuestion(Question question, Statement statement) throws SQLException {
         statement.executeUpdate(
-                String.format("UPDATE Question SET downloads=%d WHERE contents='%s'",
+                String.format("UPDATE Question SET downloads=%d WHERE id=%d",
                         question.getDownloads(),
-                        question.getContents()
+                        question.getId()
                 )
         );
     }
@@ -304,9 +303,9 @@ public class PlayerResource {
     /*
      * This function gets the question with the given id using the given JDBC statement.
      */
-    private void deleteQuestion(String contents, Statement statement) throws SQLException {
+    private void deleteQuestion(int id, Statement statement) throws SQLException {
         statement.executeUpdate(
-                String.format("DELETE FROM Question WHERE contents='%s'", contents)
+                String.format("DELETE FROM Question WHERE id=%d", id)
         );
     }
 
