@@ -17,19 +17,17 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
 
 /**
  * This Java annotation specifies the general configuration of the Google Cloud endpoint API.
- * The name and version are used in the URL: https://PROJECT_ID.appspot.com/monopoly/v1/ENDPOINT.
+ * The name and version are used in the URL: https://phonic-biplane_221307.appspot.com/game/v1/questions.
  * The namespace specifies the Java package in which to find the API implementation.
  * The issuers specifies boilerplate security features that we won't address in this course.
- *
- * You should configure the name and namespace appropriately.
  */
 @Api(
-     name = "game", // change (name of app)
+     name = "game", // name of app
         version = "v1",
         namespace =
         @ApiNamespace(
-                      ownerDomain = "lab09.cs262.calvin.edu", // change
-                      ownerName = "lab09.cs262.calvin.edu", // change
+                      ownerDomain = "lab09.cs262.calvin.edu",
+                      ownerName = "lab09.cs262.calvin.edu",
                 packagePath = ""
         ),
         issuers = {
@@ -44,16 +42,12 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
 )
 
 /**
- * This class implements a RESTful service for the question table of the monopoly database.
- * Only the question table is supported, not the game or questiongame tables.
+ * This class implements a RESTful service for the question table of the game database.
  *
- * You can test the GET endpoints using a standard browser or cURL.
- *
- * % curl --request GET \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/questions
+ *    https://phonic-biplane-221307-monopoly.appspot.com/game/v1/questions
  *
  * % curl --request GET \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question/1
+ *    https://phonic-biplane-221307.appspot.com/game/v1/question/1
  *
  * You can test the full REST API using the following sequence of cURL commands (on Linux):
  * (Run get-questions between each command to see the results.)
@@ -62,17 +56,17 @@ import static com.google.api.server.spi.config.ApiMethod.HttpMethod.DELETE;
  * % curl --request POST \
  *    --header "Content-Type: application/json" \
  *    --data '{"name":"test name...", "emailAddress":"test email..."}' \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question
+ *    https://phonic-biplane-221307.appspot.com/game/v1/question
  *
  * // Edit the new question (assuming ID #4).
  * % curl --request PUT \
  *    --header "Content-Type: application/json" \
  *    --data '{"name":"new test name...", "emailAddress":"new test email..."}' \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question/4
+ *    https://phonicc-biplane-221307.appspot.com/game/v1/question/4
  *
  * // Delete the new question (assuming ID #4).
  * % curl --request DELETE \
- *    https://calvincs262-monopoly.appspot.com/monopoly/v1/question/4
+ *    https://phonicc-biplane-221307.appspot.com/game/v1/question/4
  *
  */
 public class PlayerResource {
@@ -150,7 +144,7 @@ public class PlayerResource {
 
     /**
      * PUT
-     * This method creates/updates an instance of Person with a given ID.
+     * This method creates/updates an instance of Question with a given ID.
      * If the question doesn't exist, create a new question using the given field values.
      * If the question already exists, update the fields using the new question field values.
      * We do this because PUT is idempotent, meaning that running the same PUT several
@@ -191,7 +185,7 @@ public class PlayerResource {
 
     /**
      * POST
-     * This method creates an instance of Person with a new, unique ID
+     * This method creates an instance of Question with a new, unique ID
      * number. We do this because POST is not idempotent, meaning that running
      * the same POST several times creates multiple objects with unique IDs but
      * otherwise having the same field values.
@@ -233,7 +227,7 @@ public class PlayerResource {
 
     /**
      * DELETE
-     * This method deletes the instance of Person with a given ID, if it exists.
+     * This method deletes the instance of Question with a given ID, if it exists.
      * If the question with the given ID doesn't exist, SQL won't delete anything.
      * This makes DELETE idempotent.
      *
